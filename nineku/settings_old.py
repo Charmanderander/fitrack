@@ -56,7 +56,7 @@ ROOT_URLCONF = 'nineku.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ os.path.join(os.path.dirname(__file__) , 'website').replace('\\','/')],
+        'DIRS': [ BASE_DIR , 'website').replace('\\','/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
