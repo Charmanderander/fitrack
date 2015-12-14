@@ -8,9 +8,12 @@ class haikuForm(forms.Form):
     third_verse = forms.CharField(widget=forms.TextInput(attrs={'id':'box3','class' : 'form-control', 'placeholder':'Third Verse', 'oninput':'count(this.value,3)'}),max_length=100)
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address'}))
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address','class' : 'form-control'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First name', 'class' : 'form-control'}),required=True)
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': ' Last name', 'class' : 'form-control'}),required=True)
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username (Will be visible when you post)', 'class' : 'form-control'}),required=True)
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class' : 'form-control'}),required=True)
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter Password again', 'class' : 'form-control'}),required=True)
 
     class Meta:
         model = User
@@ -26,7 +29,7 @@ class RegistrationForm(UserCreationForm):
         raise forms.ValidationError('duplicate email')
 
     #modify save() method so that we can set user.is_active to False when we first create our user
-    def save(self, commit=True):        
+    def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
         if commit:
@@ -38,4 +41,4 @@ class RegistrationForm(UserCreationForm):
 
 class loginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Username', }), max_length=100)
-    password = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Password', }),max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class' : 'form-control', 'placeholder':'Password', }),max_length=100)

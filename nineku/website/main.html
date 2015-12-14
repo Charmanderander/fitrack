@@ -55,17 +55,11 @@
 
         {% if loginStatus == "notLogged" %}
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-        {% elif loginStatus == "success" %}
+        {% elif loginStatus == "success" or loginStatus == "inactive" %}
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Hello user!</b> <span class="caret"></span></a>
 
-        {% elif loginStatus == "inactive" %}
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-
-        {% elif loginStatus == "invalid" %}
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-
         {% endif %}
-        
+
         <ul id="login-dp" class="dropdown-menu">
           <li>
            <div class="row">
@@ -97,20 +91,13 @@
           </div>
         </div>
 
-        {% elif loginStatus == "success" %}
+        {% elif loginStatus == "success"  %}
         <p>hi user :)</p>
         <a href="/logout"><b>Logout</b></a>
         {% elif loginStatus == "inactive" %}
-        <p>inactive bitch</p>
-        {% elif loginStatus == "invalid" %}
-        <p>WRONG OMFG?</p>
+        <p>hi user :) (You are inactive!)</p>
+        <a href="/logout"><b>Logout</b></a>
         {% endif %}
-
-
-
-
-
-
 
       </li>
     </ul>
@@ -164,6 +151,9 @@ top: 100px;" class="animated bounceInDown">
 {% endblock %}
 
 {% block logout %}
+{% endblock %}
+
+{% block confirmFirst %}
 {% endblock %}
 
 
