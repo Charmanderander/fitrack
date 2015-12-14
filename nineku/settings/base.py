@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import dj_database_url
 from django.conf import settings
+import dj_database_url
 
 DATABASES = settings.DATABASES
 
@@ -89,6 +89,7 @@ WSGI_APPLICATION = 'nineku.wsgi.application'
 #         'PORT': '5432',
 #     }
 # }
+
 DATABASES['default'] =  dj_database_url.config()
 
 EMAIL_HOST = 'smtp.gmail.com'
