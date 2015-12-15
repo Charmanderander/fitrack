@@ -16,7 +16,7 @@ import os
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'z6v)oec#v5wlnqt=0k_^qpk!n4nl(&c(dg8=4k7=qs7-r2ba8+'
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirnameos.path.dirname(os.path.abspath(__file__)))
 STATIC_URL = '/static/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
