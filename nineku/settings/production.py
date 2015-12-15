@@ -27,7 +27,15 @@
 # # )
 
 # Parse database configuration from $DATABASE_URL
+import os
+from django.conf import settings
 import dj_database_url
+
+DEBUG = True
+TEMPLATE_DEBUG = True
+
+DATABASES = settings.DATABASES
+
 DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
