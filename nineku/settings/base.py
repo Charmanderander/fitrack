@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'nineku.wsgi.application'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'enyei.chan@gmail.com'
 EMAIL_HOST_PASSWORD = 'greenscout12'
-EMAIL_PORT = 25
+EMAIL_PORT = process.env.PORT
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'enyei.chan@gmail.com'
 
