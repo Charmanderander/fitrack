@@ -13,13 +13,14 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'z6v)oec#v5wlnqt=0k_^qpk!n4nl(&c(dg8=4k7=qs7-r2ba8+'
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z6v)oec#v5wlnqt=0k_^qpk!n4nl(&c(dg8=4k7=qs7-r2ba8+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'nineku.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR , 'website').replace('\\','/')],
+        'DIRS': [ os.path.join(BASE_DIR , 'website').replace('\\','/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,16 +76,18 @@ WSGI_APPLICATION = 'nineku.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'greendog',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'greendog',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+DATABASES['default'] =  dj_database_url.config()
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'enyei.chan@gmail.com'
