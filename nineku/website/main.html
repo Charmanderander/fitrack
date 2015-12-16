@@ -118,6 +118,8 @@
 <div  style="text-align: center;position: relative;
 top: 100px;" class="animated bounceInDown">
 <!--MAIN POST AREA-->
+
+{% if not viewUserPosts %}
 {% for posts in posts %}
 
 <blockquote>
@@ -129,6 +131,7 @@ top: 100px;" class="animated bounceInDown">
 
 </div>
 
+{% endif %}
 
 {% block userPosts %}
 {% endblock %}
