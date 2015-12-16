@@ -7,7 +7,7 @@ class haikuDB(models.Model):
     first_verse = models.CharField(max_length=100)
     second_verse = models.CharField(max_length=100)
     third_verse = models.CharField(max_length=100)
-    user = models.CharField(max_length=100)
+    user = models.CharField(max_length=100,default="unknown user")
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
