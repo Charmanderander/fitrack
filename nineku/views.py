@@ -52,7 +52,7 @@ def upload(request):
               third_verseForm = data['third_verse']
               h = haikuDB(first_verse=first_verseForm, second_verse=second_verseForm, third_verse=third_verseForm)
               h.save()
-              return render(request, 'upload/upload.html', {'form': form, 'loginStatus':request.session['loginStatus']})
+              return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus']})
             else:                   ##invalid input to the boxes
                 return render(request, 'upload.html', {'form': ""})
     elif ( request.session['loginStatus'] == "notLogged"):
