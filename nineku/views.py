@@ -52,7 +52,8 @@ def upload(request):
               first_verseForm = data['first_verse']
               second_verseForm = data['second_verse']
               third_verseForm = data['third_verse']
-              h = haikuDB(first_verse=first_verseForm, second_verse=second_verseForm, third_verse=third_verseForm, user=request.session['username'])
+              username = request.session['username']
+              h = haikuDB(first_verse=first_verseForm, second_verse=second_verseForm, third_verse=third_verseForm, user=username)
               h.save()
               return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus']})
             else:                   ##invalid input to the boxes
