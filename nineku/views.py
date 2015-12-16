@@ -140,3 +140,8 @@ def register_confirm(request, activation_key):
     user.save()
     request.session['loginStatus'] = "success"
     return render_to_response('registration/confirm.html', args, context_instance=RequestContext(request))
+
+def viewUserPosts(request):
+    username = request.session['username']
+    posts = haikuDB.objects.all(user=username)
+    return render(request,'viewUserPosts.html', {'posts': posts, 'loginForm':form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})

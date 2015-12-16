@@ -92,10 +92,12 @@
         </div>
 
         {% elif loginStatus == "success"  %}
-        <p>hi user :)</p>
+        <p>hi {{username}} :)</p>
+        <a href="/viewUserPosts"><b>View my posts</b></a>
         <a href="/logout"><b>Logout</b></a>
         {% elif loginStatus == "inactive" %}
-        <p>hi user :) (You are inactive!)</p>
+        <p>hi {{username}} :) (You are inactive!)</p>
+        <a href="/viewUserPosts"><b>View my posts</b></a>
         <a href="/logout"><b>Logout</b></a>
         {% endif %}
 
@@ -128,6 +130,8 @@ top: 100px;" class="animated bounceInDown">
 </div>
 
 
+{% block userPosts %}
+{% endblock %}
 
 {% block upload %}
 {% endblock %}

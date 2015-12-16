@@ -1,0 +1,15 @@
+{% extends "main.html" %}
+
+
+{% block userPosts %}
+
+{% for posts in posts %}
+
+<blockquote>
+  <p> {{posts.first_verse}} / {{posts.second_verse}} / {{posts.third_verse}} </p>
+  <p><small>{{posts.user}}</small></p>
+</blockquote>
+
+{% endfor %}
+
+{% endblock %}
