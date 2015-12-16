@@ -24,6 +24,8 @@ def main(request):
           username = data['username']
           password = data['password']
           request.session['loginStatus'] = authUser(username,password)
+          if (request.session['loginStatus'] == "success"):
+              request.session['username'] = username
           if (request.session['loginStatus'] == "invalid"):
               request.session['loginStatus'] = "notLogged"
               return render(request, 'upload/invalidLogin.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
@@ -50,7 +52,7 @@ def upload(request):
               first_verseForm = data['first_verse']
               second_verseForm = data['second_verse']
               third_verseForm = data['third_verse']
-              h = haikuDB(first_verse=first_verseForm, second_verse=second_verseForm, third_verse=third_verseForm)
+              h = haikuDB(first_verse=first_verseForm, second_verse=second_verseForm, third_verse=third_verseForm, user=request.session['username'])
               h.save()
               return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus']})
             else:                   ##invalid input to the boxes
