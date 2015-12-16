@@ -16,6 +16,8 @@ import hashlib, datetime, random
 def main(request):
     if ('loginStatus' not in request.session): #initializing user session
         request.session['loginStatus'] = "notLogged"
+    if ('username' not in request.session): #initializing user session
+        request.session['loginStatus'] = "notLogged"
 
     if request.method == 'POST': ##user logs in
         form = loginForm(request.POST)
@@ -34,7 +36,7 @@ def main(request):
         form = loginForm()
 
     posts = haikuDB.objects.all()
-    return render(request,'main.html', {'posts': posts, 'loginForm':form, 'loginStatus':request.session['loginStatus']})
+    return render(request,'main.html', {'posts': posts, 'loginForm':form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
 def login(request):
     return render(request,'login.html')
@@ -55,16 +57,16 @@ def upload(request):
               username = request.session['username']
               h = haikuDB(first_verse=first_verseForm, second_verse=second_verseForm, third_verse=third_verseForm, user=username)
               h.save()
-              return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus']})
+              return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
             else:                   ##invalid input to the boxes
                 return render(request, 'upload.html', {'form': ""})
     elif ( request.session['loginStatus'] == "notLogged"):
         return render(request, 'upload/loginFirst.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
     elif (request.session['loginStatus'] == "inactive"):
-        return render(request, 'upload/confirmFirst.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
+        return render(request, 'upload/confirmFirst.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus'],'username':request.session['username']})
     form = haikuForm()
 
-    return render(request, 'upload/upload.html', {'loginForm':loginForm,'form': form, 'loginStatus':request.session['loginStatus']})
+    return render(request, 'upload/upload.html', {'loginForm':loginForm,'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
 
 def register_success(request):
