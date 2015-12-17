@@ -2,8 +2,6 @@ import os
 from django.conf import settings
 import dj_database_url
 
-TEMPLATE_DEBUG = False
-
 DATABASES = settings.DATABASES
 
 DATABASES['default'] =  dj_database_url.config()
