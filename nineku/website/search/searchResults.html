@@ -1,12 +1,21 @@
 {% extends "main.html" %}
 
-
 {% block searchResults %}
-<div>
+  {% if found_entries %}
+  {% for found_entries in found_entries %}
 
+  <blockquote>
+    <p> {{found_entries.first_verse}} / {{found_entries.second_verse}} / {{found_entries.third_verse}} </p>
+    <p><small>{{found_entries.user}}</small></p>
+  </blockquote>
 
-<h1> searching </h1>
+  {% endfor %}
+  {% else %}
 
+  <blockquote>
+    <p> No results found </p>
+    <p><small>Why not search for something else?</small></p>
+  </blockquote>
 
-</div>
+  {% endif %}
 {% endblock %}

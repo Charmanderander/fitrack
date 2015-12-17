@@ -9,10 +9,25 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/animate.min.css' %}"/>
   <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}"/>
   <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-
+<style>
+#background{
+  position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image: url("{% static 'media/fog-bg.jpg' %}");
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: 100%;
+opacity: 0.3;
+filter:alpha(opacity=80);
+}
+</style>
 </head>
 
-
+<div id="background">
+</div>
 <body>
 
   <nav class="navbar navbar-default">
@@ -39,12 +54,12 @@
 
          <!--SEARCH-->
        </ul>
-       <form class="navbar-form navbar-left" action="/" method="POST">
+       <form class="navbar-form navbar-left" action="/search" method="GET">
          {% csrf_token %}
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" name="search" class="form-control" placeholder="Search">
         </div>
-        <button type="submit" name="search" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
       </form>
 
 
@@ -114,6 +129,7 @@
 </nav>
 
 
+
 <div  style="text-align: center;position: relative;
 top: 100px;" class="animated bounceInDown">
 <!--MAIN POST AREA-->
@@ -128,7 +144,6 @@ top: 100px;" class="animated bounceInDown">
 
 {% endfor %}
 
-</div>
 
 {% endif %}
 
@@ -165,7 +180,6 @@ top: 100px;" class="animated bounceInDown">
 
 {% block searchResults %}
 {% endblock %}
-
 
 </body>
 

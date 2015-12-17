@@ -2,13 +2,12 @@
 
 
 {% block userPosts %}
-
-{% if posts %}
-{% for posts in posts %}
+{% if userPosts %}
+{% for userPosts in userPosts %}
 
 <blockquote>
-  <p> {{posts.first_verse}} / {{posts.second_verse}} / {{posts.third_verse}} </p>
-  <p><small>{{posts.user}}</small></p>
+  <p> {{userPosts.first_verse}} / {{userPosts.second_verse}} / {{userPosts.third_verse}} </p>
+  <p><small>{{userPosts.user}}</small></p>
 </blockquote>
 
 {% endfor %}
@@ -20,5 +19,4 @@
 </blockquote>
 
 {% endif %}
-
 {% endblock %}

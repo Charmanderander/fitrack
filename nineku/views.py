@@ -3,15 +3,13 @@ from django.shortcuts import render, render_to_response, get_object_or_404
 from .models import *
 from .forms import *
 from .auth import *
+from .search import *
 from django.template import RequestContext
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.contrib import auth
 from django.core.context_processors import csrf
 import hashlib, datetime, random
-
-
-
 
 def main(request):
     if ('loginStatus' not in request.session): #initializing user session
@@ -31,9 +29,6 @@ def main(request):
           if (request.session['loginStatus'] == "invalid"):
               request.session['loginStatus'] = "notLogged"
               return render(request, 'upload/invalidLogin.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
-
-    elif request.method == 'POST' and "search" in request.POST:
-        return render(request, 'search/searchResults.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
     else:
         form = loginForm()
@@ -147,4 +142,14 @@ def register_confirm(request, activation_key):
 def viewUserPosts(request):
     username = request.session['username']
     posts = haikuDB.objects.all().filter(user=username)
-    return render(request,'viewUserPosts.html', {'posts': posts, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username'],'viewUserPosts':1})
+    return render(request,'viewUserPosts.html', {'userPosts': posts, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username'],'viewUserPosts':1})
+
+def search(request):
+    query_string = ''
+    found_entries = None
+    if ('search' in request.GET) and request.GET['search'].strip():
+        query_string = request.GET['search']
+        entry_query = get_query(query_string, ['first_verse', 'second_verse', 'third_verse', 'user'])
+        found_entries = haikuDB.objects.filter(entry_query)
+
+    return render(request,'search/searchResults.html', {'query_string': query_string, 'found_entries': found_entries, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
