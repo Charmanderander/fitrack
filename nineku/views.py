@@ -17,20 +17,23 @@ def main(request):
     if ('loginStatus' not in request.session): #initializing user session
         request.session['loginStatus'] = "notLogged"
     if ('username' not in request.session): #initializing user session
-        request.session['loginStatus'] = "notLogged"
+        request.session['username'] = "notLogged"
 
-    if request.method == 'POST': ##user logs in
+    if request.method == 'POST' and "login" in request.POST: ##user logs in
         form = loginForm(request.POST)
         if form.is_valid():     ## valid input
           data = form.cleaned_data
           username = data['username']
           password = data['password']
           request.session['loginStatus'] = authUser(username,password)
-          if (request.session['loginStatus'] == "success"):
+          if (request.session['loginStatus'] == "success" or request.session['loginStatus'] == "inactive"):
               request.session['username'] = username
           if (request.session['loginStatus'] == "invalid"):
               request.session['loginStatus'] = "notLogged"
               return render(request, 'upload/invalidLogin.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
+
+    elif request.method == 'POST' and "search" in request.POST:
+        return render(request, 'search/searchResults.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
     else:
         form = loginForm()
@@ -105,8 +108,8 @@ def register_user(request):
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
             48hours https://peaceful-chamber-7998.herokuapp.com/confirm/%s" % (username, activation_key)
 
-            send_mail(email_subject, email_body, 'enyei.chan@gmail.com',
-                [email], fail_silently=False)
+            # send_mail(email_subject, email_body, 'enyei.chan@gmail.com',
+            #     [email], fail_silently=False)
 
             return HttpResponseRedirect('/success')
     else:
