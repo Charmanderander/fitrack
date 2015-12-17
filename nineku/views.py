@@ -108,8 +108,8 @@ def register_user(request):
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
             48hours https://peaceful-chamber-7998.herokuapp.com/confirm/%s" % (username, activation_key)
 
-            # send_mail(email_subject, email_body, 'enyei.chan@gmail.com',
-            #     [email], fail_silently=False)
+            send_mail(email_subject, email_body, 'enyei.chan@gmail.com',
+                [email], fail_silently=False)
 
             return HttpResponseRedirect('/success')
     else:
