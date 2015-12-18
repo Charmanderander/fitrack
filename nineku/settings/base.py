@@ -23,7 +23,7 @@ STATIC_URL = '/static/'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
    STATIC_ROOT = os.path.join(BASE_DIR, '/static')
