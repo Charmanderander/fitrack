@@ -23,7 +23,7 @@ STATIC_URL = '/static/'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
    STATIC_ROOT = os.path.join(BASE_DIR, '/static')
@@ -81,13 +81,11 @@ WSGI_APPLICATION = 'nineku.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'dreamrlog@gmail.com'
-EMAIL_HOST_PASSWORD = 'Pa5sw0rd123'
-EMAIL_PORT = 25
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'dreamrlog@gmail.com'
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_HOST_USER = 'test@sandbox6c113a85e66c48318bf01d98bbf65861.mailgun.org'
+EMAIL_HOST_PASSWORD = 'greenscout12'
+EMAIL_PORT = 587
 
 
 # Internationalization
