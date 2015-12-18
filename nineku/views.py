@@ -4,7 +4,6 @@ from .models import *
 from .forms import *
 from .auth import *
 from .search import *
-from .email import *
 from django.template import RequestContext
 from django.core.mail import send_mail
 from django.utils import timezone
