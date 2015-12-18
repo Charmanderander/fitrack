@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'nineku.wsgi.application'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'dreamrlog@gmail.com'
-EMAIL_HOST_PASSWORD = 'Pa5sw0rd1'
+EMAIL_HOST_PASSWORD = 'Pa5sw0rd123'
 EMAIL_PORT = 25
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'dreamrlog@gmail.com'
