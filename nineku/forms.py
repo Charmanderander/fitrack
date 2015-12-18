@@ -42,3 +42,9 @@ class RegistrationForm(UserCreationForm):
 class loginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Username', }), max_length=100)
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class' : 'form-control', 'placeholder':'Password', }),max_length=100)
+
+
+class dreamForm(forms.Form):
+    textArea = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Enter your dream here', 'oninput':'checkBoxes()','id':'textArea' }), max_length=100)
+    mood = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Describe your mood',  'oninput':'checkBoxes()','id':'mood'  }), max_length=100)
+    tags = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Tags',  'oninput':'checkBoxes()','id':'tags' }), max_length=100)

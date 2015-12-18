@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^upload', views.upload),
     url(r'^login', views.login),
     url(r'^logout', views.logout),
-    url(r'^viewUserPosts', views.viewUserPosts),
+    url(r'^myPosts', views.viewUserPosts),
     url(r'^search', views.search),
     url(r'^confirm/(?P<activation_key>\w+)/', views.register_confirm),
     url(r'^$', views.main),

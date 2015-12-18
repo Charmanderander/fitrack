@@ -6,100 +6,43 @@
 {% csrf_token %}
 <div style="width: 500px; margin-left:auto; margin-right:auto;">
 
-  <h1 >How to:</h1>
-  <p <small>The first sentence contains 5 syllables</a></small></p>
-  <p <small>The second sentence contains 7 syllables</a></small></p>
-  <p <small>The last sentence contains 5 syllables</a></small></p>
-
-  <br>
   <div class="input-group margin-bottom-sm">
 
 
   <span class="input-group-addon"><i id="thumb1" class="fa fa-question-circlefa fa-question-circlefa fa-question-circle"></i></span>
-  {{form.first_verse}}
+  {{form.textArea}}
 </div>
 
 <br>
 
   <div class="input-group margin-bottom-sm">
   <span class="input-group-addon"><i id="thumb2" class="fa fa-question-circlefa fa-question-circle"></i></span>
-  {{form.second_verse}}
+  {{form.mood}}
 </div>
 
 <br>
 
   <div class="input-group margin-bottom-sm">
   <span class="input-group-addon"><i id="thumb3"class="fa fa-question-circle"></i></span>
-  {{form.third_verse}}
+  {{form.tags}}
 </div>
 </div>
 
 <br>
 
 <div style="text-align:center;">
-   <input id="submitButton" type="submit" class="btn btn-default" value="Haiku..." disabled="true">
+   <input id="submitButton" type="submit" class="btn btn-default" value="Log it" disabled="true">
 </div>
 
 </form>
 
 <script>
-var box1okay = 0;
-var box2okay = 0;
-var box3okay = 0;
-
-
-function count(word, verse) {
-	if(word == ""){
-		document.getElementById("thumb1").className = "fa fa-question-circlefa fa-question-circle";
-	}
-  word = word.toLowerCase();
-  word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');
-  word = word.replace(/^y/, '');
-  if(verse == 1){
-  	if(word == ""){
-		document.getElementById("thumb1").className = "fa fa-question-circlefa fa-question-circle";
-		box1okay = 0;
-	}
-  	else if (word.match(/[aeiouy]{1,2}/g).length == 5){
-  		document.getElementById("thumb1").className = "fa fa-thumbs-o-up";
-  		box1okay = 1;
-  	} else {
-  		document.getElementById("thumb1").className = "fa fa-thumbs-down"
-  		box1okay = 0;
-  	}
-  } else if (verse ==2){
-  	if(word == ""){
-		document.getElementById("thumb2").className = "fa fa-question-circlefa fa-question-circle";
-		box2okay = 0;
-	}
-  	if (word.match(/[aeiouy]{1,2}/g).length == 7){
-  		document.getElementById("thumb2").className = "fa fa-thumbs-o-up";
-  		box2okay = 1;
-  	} else {
-  		document.getElementById("thumb2").className = "fa fa-thumbs-down";
-  		box2okay = 0;
-  	}
+function checkBoxes(){
+  if (document.getElementById('textArea').value != "" && document.getElementById('mood').value != "" && document.getElementById('tags').value != "" ){
+    document.getElementById('submitButton').disabled = false
   } else {
-  	if(word == ""){
-		document.getElementById("thumb3").className = "fa fa-question-circlefa fa-question-circle";
-		box3okay = 0;
-	}
-  	if (word.match(/[aeiouy]{1,2}/g).length == 5){
-  		document.getElementById("thumb3").className = "fa fa-thumbs-o-up";
-  		box3okay = 1;
-  	} else {
-  		document.getElementById("thumb3").className = "fa fa-thumbs-down";
-  		box3okay = 0;
-  	}
+    document.getElementById('submitButton').disabled = true
   }
-
-  if(box1okay && box2okay && box3okay){
-  	document.getElementById("submitButton").disabled = false;
-  } else {
-  	document.getElementById("submitButton").disabled = true;
-  }
-
 }
-
 </script>
 {% endblock %}

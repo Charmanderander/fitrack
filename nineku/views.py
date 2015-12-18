@@ -33,7 +33,7 @@ def main(request):
     else:
         form = loginForm()
 
-    posts = haikuDB.objects.all()
+    posts = dreamDB.objects.all()
     return render(request,'main.html', {'posts': posts, 'loginForm':form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
 def login(request):
@@ -53,7 +53,7 @@ def upload(request):
               second_verseForm = data['second_verse']
               third_verseForm = data['third_verse']
               username = request.session['username']
-              h = haikuDB(first_verse=first_verseForm, second_verse=second_verseForm, third_verse=third_verseForm, user=username)
+              h = dreamDB(first_verse=first_verseForm, second_verse=second_verseForm, third_verse=third_verseForm, user=username)
               h.save()
               return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
             else:                   ##invalid input to the boxes
@@ -62,7 +62,7 @@ def upload(request):
         return render(request, 'upload/loginFirst.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
     elif (request.session['loginStatus'] == "inactive"):
         return render(request, 'upload/confirmFirst.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus'],'username':request.session['username']})
-    form = haikuForm()
+    form = dreamForm()
 
     return render(request, 'upload/upload.html', {'loginForm':loginForm,'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
@@ -141,7 +141,7 @@ def register_confirm(request, activation_key):
 
 def viewUserPosts(request):
     username = request.session['username']
-    posts = haikuDB.objects.all().filter(user=username)
+    posts = dreamDB.objects.all().filter(user=username)
     return render(request,'viewUserPosts.html', {'userPosts': posts, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username'],'viewUserPosts':1})
 
 def search(request):
@@ -150,6 +150,6 @@ def search(request):
     if ('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET['search']
         entry_query = get_query(query_string, ['first_verse', 'second_verse', 'third_verse', 'user'])
-        found_entries = haikuDB.objects.filter(entry_query)
+        found_entries = dreamDB.objects.filter(entry_query)
 
     return render(request,'search/searchResults.html', {'query_string': query_string, 'found_entries': found_entries, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
