@@ -46,7 +46,7 @@ def logout(request):
 def upload(request):
     if (request.session['loginStatus'] == "success"):
         if request.method == 'POST':
-            form = haikuForm(request.POST)
+            form = dreamForm(request.POST)
             if form.is_valid():     ## valid input
               data = form.cleaned_data
               dream = data['textArea']
