@@ -49,7 +49,7 @@ def upload(request):
             form = dreamForm(request.POST)
             if form.is_valid():     ## valid input
               data = form.cleaned_data
-              dream = data['textArea']
+              dream = data['dream']
               mood = data['mood']
               tags = data['tags']
               username = request.session['username']
@@ -150,7 +150,7 @@ def search(request):
     found_entries = None
     if ('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET['search']
-        entry_query = get_query(query_string, ['first_verse', 'second_verse', 'third_verse', 'user'])
+        entry_query = get_query(query_string, ['dream', 'mood', 'tags', 'user'])
         found_entries = dreamDB.objects.filter(entry_query)
 
     return render(request,'search/searchResults.html', {'query_string': query_string, 'found_entries': found_entries, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
