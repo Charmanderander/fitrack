@@ -26,7 +26,7 @@ class RegistrationForm(UserCreationForm):
             User._default_manager.get(email=email)
         except User.DoesNotExist:
             return email
-        raise forms.ValidationError('duplicate email')
+        raise forms.ValidationError('The email provided is already is use')
 
     #modify save() method so that we can set user.is_active to False when we first create our user
     def save(self, commit=True):

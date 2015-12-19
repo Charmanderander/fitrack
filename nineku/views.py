@@ -17,7 +17,11 @@ def main(request):
     if ('username' not in request.session): #initializing user session
         request.session['username'] = "notLogged"
 
-    if request.method == 'POST' and "login" in request.POST: ##user logs in
+    posts = dreamDB.objects.all()
+    return render(request,'main.html', {'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+
+def login(request):
+    if request.method == 'POST':
         form = loginForm(request.POST)
         if form.is_valid():     ## valid input
           data = form.cleaned_data
@@ -26,22 +30,26 @@ def main(request):
           request.session['loginStatus'] = authUser(username,password)
           if (request.session['loginStatus'] == "success" or request.session['loginStatus'] == "inactive"):
               request.session['username'] = username
-          if (request.session['loginStatus'] == "invalid"):
+          elif (request.session['loginStatus'] == "invalid"):
               request.session['loginStatus'] = "notLogged"
               return render(request, 'upload/invalidLogin.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
-
-    else:
-        form = loginForm()
-
-    posts = dreamDB.objects.all()
-    return render(request,'main.html', {'posts': posts, 'loginForm':form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
-
-def login(request):
-    return render(request,'login.html')
+    return HttpResponseRedirect("/")
 
 def logout(request):
+    request.session.flush()
     request.session['loginStatus'] = "notLogged"
+    request.session['username'] = "notLogged"
     return render(request,'logout.html',{'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
+
+def uploadSuccess(request):
+    return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+
+def register_success(request):
+    return render(request, 'registration/success.html' , {'loginForm': loginForm(), 'loginStatus':request.session['loginStatus']})
+
+def already_confirmed(request):
+    return render(request, 'registration/already_confirmed.html' , {'loginForm': loginForm(),'loginStatus':request.session['loginStatus']})
+
 
 def upload(request):
     if (request.session['loginStatus'] == "success"):
@@ -55,7 +63,7 @@ def upload(request):
               username = request.session['username']
               h = dreamDB(dream=dream, mood=mood, tags=tags, user=username)
               h.save()
-              return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+              return HttpResponseRedirect("/uploadSuccess")
             else:                   ##invalid input to the boxes
                 return render(request, 'upload.html', {'form': ""})
     elif ( request.session['loginStatus'] == "notLogged"):
@@ -65,13 +73,6 @@ def upload(request):
     form = dreamForm()
 
     return render(request, 'upload/upload.html', {'loginForm':loginForm,'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
-
-
-def register_success(request):
-    return render(request, 'registration/success.html' , {'loginForm': loginForm(), 'loginStatus':request.session['loginStatus']})
-
-def already_confirmed(request):
-    return render(request, 'registration/already_confirmed.html' , {'loginForm': loginForm(),'loginStatus':request.session['loginStatus']})
 
 def register_user(request):
     args = {}

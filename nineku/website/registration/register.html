@@ -2,8 +2,17 @@
 
 
 {% block register %}
+{% if form.errors.items %}
+<div class="jumbotron">
+{% for key, value in form.errors.items %}
+<p><small> {{value|striptags}} </small></p>
+{% endfor %}
+</div>
+{% endif %}
+
 <form class="form-signup" method="POST">{% csrf_token %}
   <div style="width: 500px; margin-left:auto; margin-right:auto;">
+
     <h2>Create your account</h2>
     <div class="form-group">
         <label>First name</label><br>
@@ -16,19 +25,16 @@
     </div>
     <br>
     <div class="form-group">
-        {{ form.email.errors }}
         <label>E-mail</label><br>
         {{ form.email }}
     </div>
     <br>
     <div class="form-group">
-    {{form.errors.values.0}}
         <label>Username</label><br>
         {{ form.username }}
     </div>
     <br>
     <div class="form-group">
-        {{form.errors.values.1}}
         <label>Password</label><br>
         {{ form.password1 }}
     </div>
