@@ -5,7 +5,10 @@
   {% for found_entries in found_entries %}
 
   <blockquote>
-    <p> {{found_entries.dream}} / {{found_entries.mood}} / {{found_entries.tags}} </p>
+    <p> {{found_entries.dream}} </p> <br>
+
+    <p> Feeling {{found_entries.mood}} </p><br>
+    <p><small>tags: {{found_entries.tags}}</small></p>
     <p><small>{{found_entries.user}}</small></p>
   </blockquote>
 
