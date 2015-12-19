@@ -49,11 +49,11 @@ def upload(request):
             form = haikuForm(request.POST)
             if form.is_valid():     ## valid input
               data = form.cleaned_data
-              first_verseForm = data['first_verse']
-              second_verseForm = data['second_verse']
-              third_verseForm = data['third_verse']
+              dream = data['textArea']
+              mood = data['mood']
+              tags = data['tags']
               username = request.session['username']
-              h = dreamDB(first_verse=first_verseForm, second_verse=second_verseForm, third_verse=third_verseForm, user=username)
+              h = dreamDB(dream=dream, mood=mood, tags=tags, user=username)
               h.save()
               return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
             else:                   ##invalid input to the boxes
@@ -116,6 +116,7 @@ def register_confirm(request, activation_key):
     args = {}
     args['loginStatus'] = request.session['loginStatus']
     args['loginForm'] = loginForm()
+    args['username'] = request.session['username']
     #check if user is already logged in and if he is, redirect him to some other url, e.g. home
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
