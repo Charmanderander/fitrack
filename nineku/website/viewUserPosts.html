@@ -6,11 +6,11 @@
 {% for userPosts in userPosts %}
 
 <blockquote>
-  <p> {{userPosts.dream}} </p> <br>
+  <p> {{posts.dream}} </p> <br>
 
-  <p> Feeling {{userPosts.mood}} </p><br>
-  <p><small>tags: {{userPosts.tags}}</small></p>
-  <p><small>{{userPosts.user}}</small></p>
+  <p><small>Feelings: {{posts.mood}}</small></p>
+  <p><small>tags: {{posts.tags}}</small></p>
+  <p><small>{{posts.user}}</small></p>
 </blockquote>
 
 {% endfor %}
