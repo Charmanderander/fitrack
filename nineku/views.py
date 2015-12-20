@@ -110,7 +110,6 @@ def register_user(request):
             return HttpResponseRedirect('/success')
     else:
         args['form'] = RegistrationForm()
-        args['timezones'] = pytz.common_timezones
 
     return render_to_response('registration/register.html', args, context_instance=RequestContext(request))
 
