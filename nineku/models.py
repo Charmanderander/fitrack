@@ -8,6 +8,7 @@ class dreamDB(models.Model):
     mood = models.CharField(max_length=100)
     tags = models.CharField(max_length=100)
     user = models.CharField(max_length=100,default="unknown user")
+    datetime = models.DateTimeField(default=datetime.datetime.now())
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.contrib import auth
 from django.core.context_processors import csrf
 import hashlib, datetime, random
+import pytz
 
 def main(request):
     if ('loginStatus' not in request.session): #initializing user session
@@ -17,7 +18,7 @@ def main(request):
     if ('username' not in request.session): #initializing user session
         request.session['username'] = "notLogged"
 
-    posts = dreamDB.objects.all()
+    posts = dreamDB.objects.order_by('-pk').all()
     return render(request,'main.html', {'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
 def login(request):
@@ -110,6 +111,7 @@ def register_user(request):
             return HttpResponseRedirect('/success')
     else:
         args['form'] = RegistrationForm()
+        args['timezones'] = pytz.common_timezones
 
     return render_to_response('registration/register.html', args, context_instance=RequestContext(request))
 
