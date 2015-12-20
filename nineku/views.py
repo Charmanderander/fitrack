@@ -10,7 +10,6 @@ from django.utils import timezone
 from django.contrib import auth
 from django.core.context_processors import csrf
 import hashlib, datetime, random
-import pytz
 
 def main(request):
     if ('loginStatus' not in request.session): #initializing user session
