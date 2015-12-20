@@ -117,7 +117,7 @@ def register_confirm(request, activation_key):
     args = {}
     args['loginStatus'] = "notLogged"
     args['loginForm'] = loginForm()
-    args['username'] = request.session['username']
+    args['username'] = "notLogged"
     #check if user is already logged in and if he is, redirect him to some other url, e.g. home
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
