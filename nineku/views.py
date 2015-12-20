@@ -102,7 +102,7 @@ def register_user(request):
             # Send email with activation key
             email_subject = 'Account confirmation'
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours https://peaceful-chamber-7998.herokuapp.com/confirm/%s" % (username, activation_key)
+            48hours www.dreamrlog.com/confirm/%s" % (username, activation_key)
 
             send_mail(email_subject, email_body, 'dreamrlog@gmail.com',
                 [email], fail_silently=False)
@@ -132,13 +132,11 @@ def register_confirm(request, activation_key):
     user = user_profile.user
 
     if (user.is_active == True): #User already confirmed
-        request.session['loginStatus'] = "success"
         return HttpResponseRedirect('/already_confirmed')
     else: #confirm the user
         user.is_active = True
 
     user.save()
-    request.session['loginStatus'] = "success"
     return render_to_response('registration/confirm.html', args, context_instance=RequestContext(request))
 
 def viewUserPosts(request):
