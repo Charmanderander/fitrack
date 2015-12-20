@@ -42,7 +42,7 @@ def logout(request):
     return render(request,'logout.html',{'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
 
 def uploadSuccess(request):
-    return render(request, 'upload/uploadSuccess.html', {'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+    return render(request, 'upload/uploadSuccess.html', {'form': loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
 def register_success(request):
     return render(request, 'registration/success.html' , {'loginForm': loginForm(), 'loginStatus':request.session['loginStatus']})
