@@ -24,9 +24,9 @@ opacity: 0.3;
 filter:alpha(opacity=80);
 }
 </style>
-<!--
-<link rel="icon" type="image/png" sizes="16x16" href="{% static 'media/favicon-16x16.png'%}">
- -->
+
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'media/favicon.ico'%}">
+
 
 <title>
   DreamrLog
@@ -137,13 +137,12 @@ filter:alpha(opacity=80);
 
 
 
-<!-- <div  style="text-align: center;position: relative;
-top: 50px;" class="animated bounceInDown"> -->
+<div  style="text-align: center;position: relative;
+top: 50px; width:60%; margin:auto;word-wrap:break-word;">
 <!--MAIN POST AREA-->
 
 {% if not viewUserPosts %}
 {% for posts in posts %}
-
 <blockquote>
   <p> {{posts.dream}} </p> <br>
 
@@ -191,7 +190,7 @@ top: 50px;" class="animated bounceInDown"> -->
 
 {% block searchResults %}
 {% endblock %}
-
+</div>
 </body>
 
 </html>

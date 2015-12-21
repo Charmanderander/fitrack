@@ -2,11 +2,6 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-class haikuForm(forms.Form):
-    first_verse = forms.CharField(widget=forms.TextInput(attrs={'id':'box1','class' : 'form-control', 'placeholder':'First Verse', 'oninput':'count(this.value,1)'}), max_length=100)
-    second_verse = forms.CharField(widget=forms.TextInput(attrs={'id':'box2','class' : 'form-control', 'placeholder':'Second Verse', 'oninput':'count(this.value,2)'}),max_length=100)
-    third_verse = forms.CharField(widget=forms.TextInput(attrs={'id':'box3','class' : 'form-control', 'placeholder':'Third Verse', 'oninput':'count(this.value,3)'}),max_length=100)
-
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address','class' : 'form-control'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First name', 'class' : 'form-control'}),required=True)
@@ -45,6 +40,6 @@ class loginForm(forms.Form):
 
 
 class dreamForm(forms.Form):
-    dream = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Enter your dream here', 'oninput':'checkBoxes()','id':'textArea' }), max_length=100)
+    dream = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control', 'placeholder':'Enter your dream here', 'oninput':'checkBoxes()','id':'textArea' }), max_length=3000)
     mood = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Describe your mood',  'oninput':'checkBoxes()','id':'mood'  }), max_length=100)
     tags = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Tags',  'oninput':'checkBoxes()','id':'tags' }), max_length=100)
