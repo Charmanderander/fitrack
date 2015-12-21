@@ -41,9 +41,6 @@ def logout(request):
     request.session['username'] = "notLogged"
     return render(request,'logout.html',{'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
 
-def uploadSuccess(request):
-    return render(request, 'upload/uploadSuccess.html', {'form': loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
-
 def register_success(request):
     return render(request, 'registration/success.html' , {'loginForm': loginForm(), 'loginStatus':request.session['loginStatus']})
 
@@ -63,7 +60,7 @@ def upload(request):
               username = request.session['username']
               h = dreamDB(dream=dream, mood=mood, tags=tags, user=username)
               h.save()
-              return HttpResponseRedirect("/uploadSuccess")
+              return HttpResponseRedirect("/")
             else:                   ##invalid input to the boxes
                 return render(request, 'upload.html', {'form': ""})
     elif ( request.session['loginStatus'] == "notLogged"):
