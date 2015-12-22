@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 import datetime
 
 class dreamDB(models.Model):
+    title = models.CharField(max_length=100)
     dream = models.CharField(max_length=3000)
     mood = models.CharField(max_length=100)
     tags = models.CharField(max_length=100)

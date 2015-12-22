@@ -11,6 +11,7 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 import hashlib, datetime, random
 
+
 def main(request):
     if ('loginStatus' not in request.session): #initializing user session
         request.session['loginStatus'] = "notLogged"
@@ -54,11 +55,12 @@ def upload(request):
             form = dreamForm(request.POST)
             if form.is_valid():     ## valid input
               data = form.cleaned_data
+              title = data['title']
               dream = data['dream']
               mood = data['mood']
               tags = data['tags']
               username = request.session['username']
-              h = dreamDB(dream=dream, mood=mood, tags=tags, user=username)
+              h = dreamDB(title=title, dream=dream, mood=mood, tags=tags, user=username)
               h.save()
               return HttpResponseRedirect("/")
             else:                   ##invalid input to the boxes

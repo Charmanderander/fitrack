@@ -40,6 +40,7 @@ class loginForm(forms.Form):
 
 
 class dreamForm(forms.Form):
+    title = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Title',  'oninput':'checkBoxes()','id':'mood'  }), max_length=20)
     dream = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control', 'placeholder':'Enter your dream here', 'oninput':'checkBoxes()','id':'textArea' }), max_length=3000)
-    mood = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Describe your mood',  'oninput':'checkBoxes()','id':'mood'  }), max_length=100)
-    tags = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Tags',  'oninput':'checkBoxes()','id':'tags' }), max_length=100)
+    mood = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Describe your mood',  'oninput':'checkBoxes()','id':'mood'  }), max_length=20)
+    tags = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Tags (Separate by comma)',  'oninput':'checkBoxes()','id':'tags' }), max_length=20)

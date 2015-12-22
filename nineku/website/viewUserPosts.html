@@ -3,18 +3,48 @@
 
 {% block userPosts %}
 {% if userPosts %}
+
+<div class="row">
 {% for userPosts in userPosts %}
 
-<blockquote>
-  <p> {{userPosts.dream}} </p> <br>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>{{userPosts.title}}</h3>
 
-  <p><small>Feelings: {{userPosts.mood}}</small></p>
-  <p><small>tags: {{userPosts.tags}}</small></p>
-  <p><small>{{userPosts.user}}</small></p>
-  <!-- <p><small>{{userPosts.datetime}}</small></p> -->
-</blockquote>
+<div style=""class="jumbotron">
+  {{userPosts.dream|truncatechars:50}}
+</div>
 
+        <p> <small>Mood: {{userPosts.mood}} </small></p>
+      </p>  <small>Tags: #{{userPosts.tags}} </small></p>
+        <p>  <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#myModal">Read More</button>
+</p>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+  <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">{{userPosts.title}}</h4>
+          </div>
+          <div class="modal-body">
+            <p>{{userPosts.dream}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endfor %}
+</div>
+
 {% else %}
 
 <blockquote>

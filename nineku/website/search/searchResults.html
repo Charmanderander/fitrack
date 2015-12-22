@@ -2,18 +2,49 @@
 
 {% block searchResults %}
   {% if found_entries %}
+
+
+  <div class="row">
   {% for found_entries in found_entries %}
 
-  <blockquote>
-    <p> {{found_entries.dream}} </p> <br>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <div class="caption">
+          <h3>{{found_entries.title}}</h3>
 
-    <p><small>Feelings: {{found_entries.mood}} </small></p>
-    <p><small>tags: {{found_entries.tags}}</small></p>
-    <p><small>{{found_entries.user}}</small></p>
-    <!-- <p><small>{{found_entries.datetime}}</small></p> -->
-  </blockquote>
+  <div style=""class="jumbotron">
+    {{found_entries.dream|truncatechars:50}}
+  </div>
 
+          <p> <small>Mood: {{found_entries.mood}} </small></p>
+        </p>  <small>Tags: #{{found_entries.tags}} </small></p>
+          <p>  <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#myModal">Read More</button>
+  </p>
+        </div>
+      </div>
+    </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+    <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">{{found_entries.title}}</h4>
+            </div>
+            <div class="modal-body">
+              <p>{{found_entries.dream}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
   {% endfor %}
+  </div>
+
   {% else %}
 
   <blockquote>
