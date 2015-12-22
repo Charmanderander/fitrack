@@ -31,6 +31,3 @@ urlpatterns = [
     url(r'^confirm/(?P<activation_key>\w+)/', views.register_confirm),
     url(r'^$', views.main),
 ]
-
-if not settings.DEBUG:
-   urlpatterns += staticfiles_urlpatterns()
