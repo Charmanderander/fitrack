@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^register', views.register_user),
     url(r'^success', views.register_success),
     url(r'^already_confirmed', views.already_confirmed),
-    url(r'^upload', views.upload),
+    url(r'^post', views.upload),
     url(r'^login', views.login),
     url(r'^logout', views.logout),
     url(r'^myPosts', views.viewUserPosts),
