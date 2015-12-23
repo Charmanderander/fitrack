@@ -140,7 +140,7 @@ def register_confirm(request, activation_key):
 
 def viewUserPosts(request):
     username = request.session['username']
-    posts = dreamDB.objects.all().filter(user=username)
+    posts = dreamDB.objects.order_by('-pk').all().filter(user=username)
     return render(request,'viewUserPosts.html', {'userPosts': posts, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username'],'viewUserPosts':1})
 
 def search(request):
@@ -148,7 +148,7 @@ def search(request):
     found_entries = None
     if ('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET['search']
-        entry_query = get_query(query_string, ['dream', 'mood', 'tags', 'user'])
-        found_entries = dreamDB.objects.filter(entry_query)
+        entry_query = get_query(query_string, ['title', 'dream', 'mood', 'tags', 'user'])
+        found_entries = dreamDB.objects.order_by('-pk').filter(entry_query)
 
     return render(request,'search/searchResults.html', {'query_string': query_string, 'found_entries': found_entries, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
