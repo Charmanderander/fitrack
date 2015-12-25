@@ -11,23 +11,17 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 import hashlib, datetime, random
 
+def likeProcess(request):
+    postid = request.POST.get('id')
+    username = request.POST.get('user')
+    if(Likes.objects.filter(user=username, postid=postid).exists()):
+        deleteLike = Likes.objects.filter(user=username, postid=postid)
+        deleteLike.delete()
+    else:
+        saveLike = Likes(user=username, postid=postid)
+        saveLike.save()
 
-def main(request):
-    if ('loginStatus' not in request.session): #initializing user session
-        request.session['loginStatus'] = "notLogged"
-    if ('username' not in request.session): #initializing user session
-        request.session['username'] = "notLogged"
-
-    if request.method == 'POST' and 'likepost' in request.POST:
-        postid = request.POST.get('id')
-        username = request.POST.get('user')
-        if(Likes.objects.filter(user=username, postid=postid).exists()):
-            deleteLike = Likes.objects.filter(user=username, postid=postid)
-            deleteLike.delete()
-        else:
-            saveLike = Likes(user=username, postid=postid)
-            saveLike.save()
-
+def generateLikeList(request):
     username = request.session['username']
     likes = Likes.objects.all().filter(user=username)
 
@@ -37,6 +31,19 @@ def main(request):
     for like in likes:
         userl.append(like.user)
         postl.append(like.postid)
+
+    return userl, postl
+
+def main(request):
+    if ('loginStatus' not in request.session): #initializing user session
+        request.session['loginStatus'] = "notLogged"
+    if ('username' not in request.session): #initializing user session
+        request.session['username'] = "notLogged"
+
+    if request.method == 'POST' and 'likepost' in request.POST:
+        likeProcess(request)
+
+    [userl, postl] = generateLikeList(request)
 
     posts = dreamDB.objects.order_by('-pk').all()
     return render(request,'main.html', {'userl':userl, 'postl':postl, 'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
@@ -161,7 +168,13 @@ def register_confirm(request, activation_key):
 def viewUserPosts(request):
     username = request.session['username']
     posts = dreamDB.objects.order_by('-pk').all().filter(user=username)
-    return render(request,'viewUserPosts.html', {'userPosts': posts, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username'],'viewUserPosts':1})
+
+    if request.method == 'POST' and 'likepost' in request.POST:
+        likeProcess(request)
+
+    [userl, postl] = generateLikeList(request)
+
+    return render(request,'viewUserPosts.html', {'userl':userl,'postl':postl,'userPosts': posts, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username'],'viewUserPosts':1})
 
 def search(request):
     query_string = ''
@@ -171,4 +184,9 @@ def search(request):
         entry_query = get_query(query_string, ['title', 'dream', 'mood', 'tags', 'user'])
         found_entries = dreamDB.objects.order_by('-pk').filter(entry_query)
 
-    return render(request,'search/searchResults.html', {'query_string': query_string, 'found_entries': found_entries, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+    if request.method == 'POST' and 'likepost' in request.POST:
+        likeProcess(request)
+
+    [userl, postl] = generateLikeList(request)
+
+    return render(request,'search/searchResults.html', {'userl':userl,'postl':postl,'query_string': query_string, 'found_entries': found_entries, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
