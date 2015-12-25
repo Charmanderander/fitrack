@@ -163,10 +163,9 @@
               <input type="hidden" name="id" value="{{posts.pk}}">
               <input type="hidden" name="user" value="{{request.session.username}}">
               {% if loginStatus == "notLogged" %}
-              <button id="{{posts.pk}}likebutton" type="submit" class="btn btn-default" name="likepost" onclick="changeHeart(this.id)">
+              <button class="btn btn-default" disabled="">
                 {% else %}
-                <button class="btn btn-default" disabled="">
-
+                <button id="{{posts.pk}}likebutton" type="submit" class="btn btn-default" name="likepost" onclick="changeHeart(this.id)">
                 {% endif %}
 
                 {% if request.session.username in userl and posts.pk in postl %}
