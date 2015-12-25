@@ -162,8 +162,13 @@
             <form action="" method="post">{% csrf_token %}
               <input type="hidden" name="id" value="{{posts.pk}}">
               <input type="hidden" name="user" value="{{request.session.username}}">
+              {% if loginStatus == "notLogged" %}
               <button id="{{posts.pk}}likebutton" type="submit" class="btn btn-default" name="likepost" onclick="changeHeart(this.id)">
-                
+                {% else %}
+                <button class="btn btn-default" disabled="">
+
+                {% endif %}
+
                 {% if request.session.username in userl and posts.pk in postl %}
                 <i id = "{{posts.pk}}heart" class="fa fa-heart"></i>
                 {% else %}
