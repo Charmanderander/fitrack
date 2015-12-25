@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.conf import settings
 import datetime
 
 class dreamDB(models.Model):
@@ -21,3 +22,7 @@ class UserProfile(models.Model):
 
     class Meta:
         verbose_name_plural=u'User profiles'
+
+class Likes(models.Model):
+    user = models.CharField(max_length=100,null=True,blank=True)
+    postid = models.IntegerField(null=True,blank=True)

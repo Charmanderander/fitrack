@@ -18,8 +18,28 @@ def main(request):
     if ('username' not in request.session): #initializing user session
         request.session['username'] = "notLogged"
 
+    if request.method == 'POST' and 'likepost' in request.POST:
+        postid = request.POST.get('id')
+        username = request.POST.get('user')
+        if(Likes.objects.filter(user=username, postid=postid).exists()):
+            deleteLike = Likes.objects.filter(user=username, postid=postid)
+            deleteLike.delete()
+        else:
+            saveLike = Likes(user=username, postid=postid)
+            saveLike.save()
+
+    username = request.session['username']
+    likes = Likes.objects.all().filter(user=username)
+
+    userl = []
+    postl = []
+
+    for like in likes:
+        userl.append(like.user)
+        postl.append(like.postid)
+
     posts = dreamDB.objects.order_by('-pk').all()
-    return render(request,'main.html', {'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+    return render(request,'main.html', {'userl':userl, 'postl':postl, 'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
 def login(request):
     if request.method == 'POST':

@@ -1,18 +1,23 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import RegexValidator
+
+alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed for your username.')
+
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address','class' : 'form-control'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First name', 'class' : 'form-control'}),required=True)
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': ' Last name', 'class' : 'form-control'}),required=True)
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username (Will be visible when you post)', 'class' : 'form-control'}),required=True)
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username (Will be visible when you post)', 'class' : 'form-control'}),required=True,validators=[alphanumeric])
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class' : 'form-control'}),required=True)
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter Password again', 'class' : 'form-control'}),required=True)
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
+
 
     #clean email field
     def clean_email(self):
@@ -40,7 +45,7 @@ class loginForm(forms.Form):
 
 
 class dreamForm(forms.Form):
-    title = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Title',  'oninput':'checkBoxes()','id':'mood'  }), max_length=20)
+    title = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Title',  'oninput':'checkBoxes()','id':'mood'  }), max_length=30)
     dream = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control', 'placeholder':'Enter your dream here', 'oninput':'checkBoxes()','id':'textArea' }), max_length=3000)
-    mood = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Describe your mood',  'oninput':'checkBoxes()','id':'mood'  }), max_length=20)
+    mood = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Describe your mood',  'oninput':'checkBoxes()','id':'mood'  }), max_length=30)
     tags = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Tags (Separate by comma)',  'oninput':'checkBoxes()','id':'tags' }), max_length=20)
