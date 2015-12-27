@@ -159,7 +159,7 @@
           </div>
 
           <div style="text-align:right;">
-            <form action="" method="post">{% csrf_token %}
+            <form method="post">{% csrf_token %}
               <input type="hidden" name="id" value="{{posts.pk}}">
               <input type="hidden" name="user" value="{{request.session.username}}">
               {% if loginStatus == "notLogged" %}
