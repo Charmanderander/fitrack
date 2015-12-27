@@ -42,6 +42,7 @@ def main(request):
 
     if request.method == 'POST' and 'likepost' in request.POST:
         likeProcess(request)
+        return HttpResponseRedirect('/')
 
     [userl, postl] = generateLikeList(request)
 
