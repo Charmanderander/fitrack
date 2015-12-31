@@ -20,6 +20,7 @@ from nineku import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^likeProcess', views.likeProcess),
     url(r'^register', views.register_user),
     url(r'^success', views.register_success),
     url(r'^already_confirmed', views.already_confirmed),

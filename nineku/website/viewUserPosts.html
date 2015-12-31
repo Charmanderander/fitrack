@@ -14,18 +14,22 @@
           {{posts.dream|truncatechars:180}}
         </div>
         <div style="text-align:right;">
-          <form action="" method="post">{% csrf_token %}
-            <input type="hidden" name="id" value="{{posts.pk}}">
-            <input type="hidden" name="user" value="{{request.session.username}}">
-            <button id="{{posts.pk}}likebutton" type="submit" class="btn btn-default" name="likepost" onclick="changeHeart(this.id)">
-
-              {% if request.session.username in userl and posts.pk in postl %}
-              <i id = "{{posts.pk}}heart" class="fa fa-heart"></i>
+          <form class="forms" id="likeform{{posts.pk}}" method="post" onsubmit="likePost(this.id)">{% csrf_token %}
+            <input type="hidden" id="id{{posts.pk}}" value="{{posts.pk}}">
+            <input type="hidden" id="username{{posts.pk}}" value="{{request.session.username}}">
+            {% if loginStatus == "notLogged" %}
+            <button class="btn btn-default" disabled="">
               {% else %}
-              <i id = "{{posts.pk}}heart" class="fa fa-heart-o"></i>
-              {% endif %}
-            </button>
-          </form>
+              <button id="{{posts.pk}}likebutton" type="submit" class="btn btn-default" onclick="changeHeart(this.id)">
+                {% endif %}
+
+                {% if request.session.username in userl and posts.pk in postl %}
+                <i id = "{{posts.pk}}heart" class="fa fa-heart"></i>
+                {% else %}
+                <i id = "{{posts.pk}}heart" class="fa fa-heart-o"></i>
+                {% endif %}
+              </button>
+            </form>
         </div>
         <p>
           <small>Mood: {{posts.mood}} / Tags: #{{posts.tags}} </small>

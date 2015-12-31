@@ -10,16 +10,21 @@ from django.utils import timezone
 from django.contrib import auth
 from django.core.context_processors import csrf
 import hashlib, datetime, random
+from django.http import JsonResponse
 
 def likeProcess(request):
-    postid = request.POST.get('id')
-    username = request.POST.get('user')
-    if(Likes.objects.filter(user=username, postid=postid).exists()):
-        deleteLike = Likes.objects.filter(user=username, postid=postid)
-        deleteLike.delete()
+    if request.method == 'POST':
+        postid = request.POST.get('id')
+        username = request.POST.get('username')
+        if(Likes.objects.filter(user=username, postid=postid).exists()):
+            deleteLike = Likes.objects.filter(user=username, postid=postid)
+            deleteLike.delete()
+        else:
+            saveLike = Likes(user=username, postid=postid)
+            saveLike.save()
+        return JsonResponse({'foo':'bar'})
     else:
-        saveLike = Likes(user=username, postid=postid)
-        saveLike.save()
+        return JsonResponse({'foo':'bar'})
 
 def generateLikeList(request):
     username = request.session['username']
@@ -39,10 +44,6 @@ def main(request):
         request.session['loginStatus'] = "notLogged"
     if ('username' not in request.session): #initializing user session
         request.session['username'] = "notLogged"
-
-    if request.method == 'POST' and 'likepost' in request.POST:
-        likeProcess(request)
-        return HttpResponseRedirect('/')
 
     [userl, postl] = generateLikeList(request)
 
