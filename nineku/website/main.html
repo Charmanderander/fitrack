@@ -164,6 +164,13 @@
           </div>
 
           <div style="text-align:right;">
+
+
+            <p>
+              <small>Mood: {{posts.mood}} / Tags: #{{posts.tags}} </small>
+            </p>
+          </p>  <small>{{posts.user}} </small> </p>
+
             <form class="forms" id="likeform{{posts.pk}}" method="post" onsubmit="likePost(this.id)">{% csrf_token %}
               <input type="hidden" id="id{{posts.pk}}" value="{{posts.pk}}">
               <input type="hidden" id="username{{posts.pk}}" value="{{request.session.username}}">
@@ -173,25 +180,25 @@
                 <button id="{{posts.pk}}likebutton" type="submit" class="btn btn-default" onclick="changeHeart(this.id)">
                   {% endif %}
 
-                  {% if likeDict|get_item:posts.pk %}
-                  <p id="likecount{{posts.pk}}">{{ likeDict|get_item:posts.pk }}</p>
-                  {% else %}
-                  <p id="likecount{{posts.pk}}">0</p>
-                  {% endif %}
 
 
-                {% if request.session.username in userl and posts.pk in postl %}
-                <i id = "{{posts.pk}}heart" class="fa fa-heart"></i>
+            {% if request.session.username in userl and posts.pk in postl %}
+                <i id = "{{posts.pk}}heart" class="fa fa-heart"> {% if likeDict|get_item:posts.pk %}
+                <span id="likecount{{posts.pk}}">{{ likeDict|get_item:posts.pk }}</span>
                 {% else %}
-                <i id = "{{posts.pk}}heart" class="fa fa-heart-o"></i>
+                <span id="likecount{{posts.pk}}">0</span>
+                {% endif %}</i>
+                {% else %}
+                <i id = "{{posts.pk}}heart" class="fa fa-heart-o"> {% if likeDict|get_item:posts.pk %}
+                <span id="likecount{{posts.pk}}">{{ likeDict|get_item:posts.pk }}</span>
+                {% else %}
+                <span id="likecount{{posts.pk}}">0</span>
+                {% endif %}</i>
                 {% endif %}
               </button>
             </form>
           </div>
-          <p>
-            <small>Mood: {{posts.mood}} / Tags: #{{posts.tags}} </small>
-          </p>
-        </p>  <small>{{posts.user}} </small> </p>
+
         <p>  <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#{{posts.pk}}">Read More</button>
         </p>
       </div>
