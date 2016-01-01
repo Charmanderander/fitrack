@@ -35,7 +35,7 @@ def likeProcess(request):
 def generateLikeList(request):
     username = request.session['username']
     likes = Likes.objects.all().filter(user=username)
-    likesPerPost = Likes.objects.annotate(num_likes=Count('postid'))
+    likesPerPost = Likes.objects.values('postid').annotate(num_likes=Count('postid'))
 
     userl = []
     postl = []
@@ -45,8 +45,11 @@ def generateLikeList(request):
         postl.append(like.postid)
 
     likeDict = {}
+    print likesPerPost
     for likedPosts in likesPerPost:
-        likeDict[likedPosts.postid] = likedPosts.num_likes
+        likeDict[likedPosts['postid']] = likedPosts['num_likes']
+
+    print likeDict
 
     return userl, postl, likeDict
 
