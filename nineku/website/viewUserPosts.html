@@ -23,6 +23,12 @@
               <button id="{{posts.pk}}likebutton" type="submit" class="btn btn-default" onclick="changeHeart(this.id)">
                 {% endif %}
 
+                {% if likeDict|get_item:posts.pk %}
+                <p id="likecount{{posts.pk}}">{{ likeDict|get_item:posts.pk }}</p>
+                {% else %}
+                <p id="likecount{{posts.pk}}">0</p>
+                {% endif %}
+
                 {% if request.session.username in userl and posts.pk in postl %}
                 <i id = "{{posts.pk}}heart" class="fa fa-heart"></i>
                 {% else %}

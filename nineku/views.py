@@ -11,6 +11,12 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 import hashlib, datetime, random
 from django.http import JsonResponse
+from django.db.models import Count
+from django.template.defaulttags import register
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
 
 def likeProcess(request):
     if request.method == 'POST':
@@ -29,6 +35,7 @@ def likeProcess(request):
 def generateLikeList(request):
     username = request.session['username']
     likes = Likes.objects.all().filter(user=username)
+    likesPerPost = Likes.objects.annotate(num_likes=Count('postid'))
 
     userl = []
     postl = []
@@ -37,7 +44,11 @@ def generateLikeList(request):
         userl.append(like.user)
         postl.append(like.postid)
 
-    return userl, postl
+    likeDict = {}
+    for likedPosts in likesPerPost:
+        likeDict[likedPosts.postid] = likedPosts.num_likes
+
+    return userl, postl, likeDict
 
 def main(request):
     if ('loginStatus' not in request.session): #initializing user session
@@ -45,10 +56,11 @@ def main(request):
     if ('username' not in request.session): #initializing user session
         request.session['username'] = "notLogged"
 
-    [userl, postl] = generateLikeList(request)
+    [userl, postl, likeDict] = generateLikeList(request)
 
     posts = dreamDB.objects.order_by('-pk').all()
-    return render(request,'main.html', {'userl':userl, 'postl':postl, 'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+
+    return render(request,'main.html', {'likeDict':likeDict, 'userl':userl, 'postl':postl, 'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
 def login(request):
     if request.method == 'POST':
@@ -174,9 +186,9 @@ def viewUserPosts(request):
     if request.method == 'POST' and 'likepost' in request.POST:
         likeProcess(request)
 
-    [userl, postl] = generateLikeList(request)
+    [userl, postl, likeDict] = generateLikeList(request)
 
-    return render(request,'viewUserPosts.html', {'userl':userl,'postl':postl,'userPosts': posts, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username'],'viewUserPosts':1})
+    return render(request,'viewUserPosts.html', {'likeDict':likeDict, 'userl':userl,'postl':postl,'userPosts': posts, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username'],'viewUserPosts':1})
 
 def search(request):
     query_string = ''
@@ -189,6 +201,6 @@ def search(request):
     if request.method == 'POST' and 'likepost' in request.POST:
         likeProcess(request)
 
-    [userl, postl] = generateLikeList(request)
+    [userl, postl, likeDict] = generateLikeList(request)
 
-    return render(request,'search/searchResults.html', {'userl':userl,'postl':postl,'query_string': query_string, 'found_entries': found_entries, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+    return render(request,'search/searchResults.html', {'likeDict':likeDict, 'userl':userl,'postl':postl,'query_string': query_string, 'found_entries': found_entries, 'loginForm':loginForm(), 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
