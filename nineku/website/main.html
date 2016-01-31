@@ -160,16 +160,11 @@
           <h3>{{posts.title}}</h3>
 
           <div style=""class="jumbotron">
-            {{posts.dream|truncatechars:180}}
+            {{posts.description|truncatechars:180}}
           </div>
 
           <div style="text-align:right;">
 
-
-            <p>
-              <small>Mood: {{posts.mood}} / Tags: #{{posts.tags}} </small>
-            </p>
-          </p>  <small>{{posts.user}} </small> </p>
 
             <form class="forms" id="likeform{{posts.pk}}" method="post" onsubmit="likePost(this.id)">{% csrf_token %}
               <input type="hidden" id="id{{posts.pk}}" value="{{posts.pk}}">
@@ -198,6 +193,12 @@
               </button>
             </form>
           </div>
+          <p>
+            <small>Distance: {{posts.distance}} km / Duration: {{posts.duration}} mins </small><br>
+            <small>Location: {{posts.location}} / Time: {{posts.time}}  </small>
+          </p>
+
+        </p>  <small>{{posts.user}} </small> </p>
 
         <p>  <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#{{posts.pk}}">Read More</button>
         </p>

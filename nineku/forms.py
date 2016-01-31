@@ -44,8 +44,10 @@ class loginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class' : 'form-control', 'placeholder':'Password', }),max_length=100)
 
 
-class dreamForm(forms.Form):
+class runForm(forms.Form):
     title = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Title',  'oninput':'checkBoxes()','id':'mood'  }), max_length=30)
-    dream = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control', 'placeholder':'Enter your dream here', 'oninput':'checkBoxes()','id':'textArea' }), max_length=3000)
-    mood = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Describe your mood',  'oninput':'checkBoxes()','id':'mood'  }), max_length=30)
-    tags = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Tags (Separate by comma)',  'oninput':'checkBoxes()','id':'tags' }), max_length=20)
+    description = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control', 'placeholder':'Describe your workout', 'oninput':'checkBoxes()','id':'textArea' }), max_length=3000)
+    distance = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Distance',  'oninput':'checkBoxes()','id':'mood'  }), max_length=30)
+    duration = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Duration',  'oninput':'checkBoxes()','id':'tags' }), max_length=20)
+    time = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Time',  'oninput':'checkBoxes()','id':'tags' }), max_length=20)
+    location = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control', 'placeholder':'Location',  'oninput':'checkBoxes()','id':'tags' }), max_length=20)

@@ -96,15 +96,17 @@ def already_confirmed(request):
 def upload(request):
     if (request.session['loginStatus'] == "success"):
         if request.method == 'POST':
-            form = dreamForm(request.POST)
+            form = runForm(request.POST)
             if form.is_valid():     ## valid input
               data = form.cleaned_data
               title = data['title']
-              dream = data['dream']
-              mood = data['mood']
-              tags = data['tags']
+              distance = data['distance']
+              duration = data['duration']
+              time = data['time']
+              location = data['location']
+              description = data['description']
               username = request.session['username']
-              h = dreamDB(title=title, dream=dream, mood=mood, tags=tags, user=username)
+              h = dreamDB(title=title, distance=distance, duration=duration, time=time, location=location, description=description, user=username)
               h.save()
               return HttpResponseRedirect("/")
             else:                   ##invalid input to the boxes
@@ -113,9 +115,9 @@ def upload(request):
         return render(request, 'upload/loginFirst.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus']})
     elif (request.session['loginStatus'] == "inactive"):
         return render(request, 'upload/confirmFirst.html', {'loginForm':loginForm,'loginStatus':request.session['loginStatus'],'username':request.session['username']})
-    form = dreamForm()
+    form = runForm()
 
-    return render(request, 'upload/upload.html', {'loginForm':loginForm,'form': form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+    return render(request, 'upload/upload.html', {'loginForm':loginForm,'form':form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
 def register_user(request):
     args = {}
@@ -198,7 +200,7 @@ def search(request):
     found_entries = None
     if ('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET['search']
-        entry_query = get_query(query_string, ['title', 'dream', 'mood', 'tags', 'user'])
+        entry_query = get_query(query_string, ['title', 'distance', 'duration', 'description', 'time', 'location', 'user'])
         found_entries = dreamDB.objects.order_by('-pk').filter(entry_query)
 
     if request.method == 'POST' and 'likepost' in request.POST:

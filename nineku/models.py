@@ -6,9 +6,11 @@ import datetime
 
 class dreamDB(models.Model):
     title = models.CharField(max_length=100)
-    dream = models.CharField(max_length=3000)
-    mood = models.CharField(max_length=100)
-    tags = models.CharField(max_length=100)
+    description = models.CharField(max_length=3000)
+    location = models.CharField(max_length=100)
+    time = models.CharField(max_length=100)
+    duration = models.CharField(max_length=100)
+    distance = models.CharField(max_length=100)
     user = models.CharField(max_length=100,default="unknown user")
     datetime = models.DateTimeField(default=datetime.datetime.now())
 
