@@ -53,6 +53,19 @@ def generateLikeList(request):
 
     return userl, postl, likeDict
 
+def myAdminPage(request):
+    if ('loginStatus' not in request.session): #initializing user session
+        request.session['loginStatus'] = "notLogged"
+    if ('username' not in request.session): #initializing user session
+        request.session['username'] = "notLogged"
+
+    [userl, postl, likeDict] = generateLikeList(request)
+
+    posts = dreamDB.objects.order_by('-pk').all()
+
+    return render(request,'adminPage.html', {'likeDict':likeDict, 'userl':userl, 'postl':postl, 'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
+
+
 def main(request):
     if ('loginStatus' not in request.session): #initializing user session
         request.session['loginStatus'] = "notLogged"

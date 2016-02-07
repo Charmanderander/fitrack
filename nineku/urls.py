@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^logout', views.logout),
     url(r'^myPosts', views.viewUserPosts),
     url(r'^search', views.search),
+    url(r'^myadminpage', views.myAdminPage),
     url(r'^confirm/(?P<activation_key>\w+)/', views.register_confirm),
     url(r'^$', views.main),
 ]

@@ -58,11 +58,14 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-      <!--      <li><a href="/"><span style="font-size:1.3em;"class="glyphicon glyphicon-home"></span></a>
+            <li><a href="/"><span style="font-size:1.3em;"class="glyphicon glyphicon-home"></span></a>
             </li>
+            <!--UPLOAD-->
             <li><a href="/post"><span style="font-size:1.3em;"class="glyphicon glyphicon-upload"></span></a>
             </li>
-            <li><a href="#"><span style="font-size:1.3em;"class="glyphicon glyphicon-fire"></span></a></li> -->
+
+            <!--HOT-->
+            <li><a href="#"><span style="font-size:1.3em;"class="glyphicon glyphicon-fire"></span></a></li>
 
             <!--SEARCH-->
           </ul>
@@ -76,7 +79,8 @@
 
 
         </ul>
-<!--
+
+        <!--LOGIN-->
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
 
@@ -134,9 +138,9 @@
           </li>
         </ul>
 
--->
-      </div>
-    </div>
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
   </nav>
 
 
@@ -161,7 +165,7 @@
 
           <div style="text-align:right;">
 
-<!--
+
             <form class="forms" id="likeform{{posts.pk}}" method="post" onsubmit="likePost(this.id)">{% csrf_token %}
               <input type="hidden" id="id{{posts.pk}}" value="{{posts.pk}}">
               <input type="hidden" id="username{{posts.pk}}" value="{{request.session.username}}">
@@ -187,9 +191,8 @@
                 {% endif %}</i>
                 {% endif %}
               </button>
-            </form>        -->
+            </form>
           </div>
-
           <p>
             <small>Distance: {{posts.distance}} km / Duration: {{posts.duration}} mins </small><br>
             <small>Location: {{posts.location}} / Time: {{posts.time}}  </small>
