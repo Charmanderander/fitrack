@@ -1,0 +1,84 @@
+{% extends "main.html" %}
+
+{% block searchResults %}
+{% if found_entries %}
+
+<div class="row">
+  {% for posts in found_entries %}
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3>{{posts.title}}</h3>
+
+        <div style=""class="jumbotron">
+          {{posts.description|truncatechars:180}}
+        </div>
+        <div style="text-align:right;">
+          <form class="forms" id="likeform{{posts.pk}}" method="post" onsubmit="likePost(this.id)">{% csrf_token %}
+            <input type="hidden" id="id{{posts.pk}}" value="{{posts.pk}}">
+            <input type="hidden" id="username{{posts.pk}}" value="{{request.session.username}}">
+            {% if loginStatus == "notLogged" %}
+            <button class="btn btn-default" disabled="">
+              {% else %}
+              <button id="{{posts.pk}}likebutton" type="submit" class="btn btn-default" onclick="changeHeart(this.id)">
+                {% endif %}
+
+
+                {% if request.session.username in userl and posts.pk in postl %}
+                    <i id = "{{posts.pk}}heart" class="fa fa-heart"> {% if likeDict|get_item:posts.pk %}
+                    <span id="likecount{{posts.pk}}">{{ likeDict|get_item:posts.pk }}</span>
+                    {% else %}
+                    <span id="likecount{{posts.pk}}">0</span>
+                    {% endif %}</i>
+                    {% else %}
+                    <i id = "{{posts.pk}}heart" class="fa fa-heart-o"> {% if likeDict|get_item:posts.pk %}
+                    <span id="likecount{{posts.pk}}">{{ likeDict|get_item:posts.pk }}</span>
+                    {% else %}
+                    <span id="likecount{{posts.pk}}">0</span>
+                    {% endif %}</i>
+                    {% endif %}
+              </button>
+            </form>
+        </div>
+        <p>
+          <small>Distance: {{posts.distance}} km / Duration: {{posts.duration}} mins </small><br>
+          <small>Location: {{posts.location}} / Time: {{posts.time}}  </small>
+        </p>
+      </p>  <small>{{posts.user}} </small></p>
+      <p>  <button type="button" class="btn btn-info btn-small" data-toggle="modal" data-target="#{{posts.pk}}">Read More</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="{{posts.pk}}" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{posts.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{posts.dream}}</p>
+      </div>
+      <div class="modal-footer">
+        <p><small>#{{posts.tags}}</small></p>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+{% else %}
+
+<blockquote>
+  <p> No results found </p>
+  <p><small>Why not search for something else?</small></p>
+</blockquote>
+
+{% endif %}
+{% endblock %}

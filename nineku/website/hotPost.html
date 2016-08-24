@@ -1,0 +1,14 @@
+{% extends "adminPage.html" %}
+
+
+{% block hot %}
+<div>
+
+{% for posts in posts %}
+
+<h1> {{posts.first_verse}} </h1>
+
+{% endfor %}
+
+</div>
+{% endblock %}
