@@ -1,0 +1,16 @@
+{% extends 'index.html'  %}
+{% block content %}
+
+<div class="about-content">
+<p> Login to view the site! </p>
+
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">  {% csrf_token %}
+
+</fb:login-button>
+
+<div id="status">
+</div>
+
+</div>
+
+{% endblock %}
