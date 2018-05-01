@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from vjj.dec import checkLogin
-from vjj.forms import suggestion
-from vjj.models import Suggestion
+from fitrack.dec import checkLogin
+from fitrack.forms import suggestion
+from fitrack.models import Suggestion
 
 def index(request):
     if request.method == 'POST':
