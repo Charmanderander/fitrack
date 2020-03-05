@@ -64,7 +64,7 @@ def myAdminPage(request):
 
     [userl, postl, likeDict] = generateLikeList(request)
 
-    posts = dreamDB.objects.order_by('-pk').all()
+    posts = data.objects.order_by('-pk').all()
 
     return render(request,'adminPage.html', {'likeDict':likeDict, 'userl':userl, 'postl':postl, 'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
@@ -77,7 +77,7 @@ def main(request):
 
     [userl, postl, likeDict] = generateLikeList(request)
 
-    posts = dreamDB.objects.order_by('-pk').all()
+    posts = data.objects.order_by('-pk').all()
 
     return render(request,'main.html', {'likeDict':likeDict, 'userl':userl, 'postl':postl, 'posts': posts, 'loginForm':loginForm, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
@@ -122,7 +122,7 @@ def upload(request):
               location = data['location']
               description = data['description']
               username = request.session['username']
-              h = dreamDB(title=title, distance=distance, duration=duration, time=time, location=location, description=description, user=username)
+              h = data(title=title, distance=distance, duration=duration, time=time, location=location, description=description, user=username)
               h.save()
               return HttpResponseRedirect("/")
             else:                   ##invalid input to the boxes
@@ -202,7 +202,7 @@ def register_confirm(request, activation_key):
 
 def viewUserPosts(request):
     username = request.session['username']
-    posts = dreamDB.objects.order_by('-pk').all().filter(user=username)
+    posts = data.objects.order_by('-pk').all().filter(user=username)
 
     if request.method == 'POST' and 'likepost' in request.POST:
         likeProcess(request)
@@ -217,7 +217,7 @@ def search(request):
     if ('search' in request.GET) and request.GET['search'].strip():
         query_string = request.GET['search']
         entry_query = get_query(query_string, ['title', 'distance', 'duration', 'description', 'time', 'location', 'user'])
-        found_entries = dreamDB.objects.order_by('-pk').filter(entry_query)
+        found_entries = data.objects.order_by('-pk').filter(entry_query)
 
     if request.method == 'POST' and 'likepost' in request.POST:
         likeProcess(request)
