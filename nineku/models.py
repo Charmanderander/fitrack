@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 import datetime
 
+from django.utils import timezone
+
 class dreamDB(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=3000)
@@ -15,9 +17,9 @@ class dreamDB(models.Model):
     datetime = models.DateTimeField(default=datetime.datetime.now())
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     activation_key = models.CharField(max_length=40, blank=True)
-    key_expires = models.DateTimeField(default=datetime.date.today())
+    key_expires = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.user.username

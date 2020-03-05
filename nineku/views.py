@@ -7,12 +7,12 @@ from .search import *
 from django.template import RequestContext
 from django.core.mail import send_mail
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_protect
 from django.contrib import auth
-from django.core.context_processors import csrf
-import hashlib, datetime, random
 from django.http import JsonResponse
 from django.db.models import Count
 from django.template.defaulttags import register
+import hashlib, datetime, random
 
 @register.filter
 def get_item(dictionary, key):
@@ -40,16 +40,19 @@ def generateLikeList(request):
     userl = []
     postl = []
 
+    print("hello")
+    print(len(likes))
+    print("hello")
     for like in likes:
         userl.append(like.user)
         postl.append(like.postid)
 
     likeDict = {}
-    print likesPerPost
+    print(likesPerPost)
     for likedPosts in likesPerPost:
         likeDict[likedPosts['postid']] = likedPosts['num_likes']
 
-    print likeDict
+    print(likeDict)
 
     return userl, postl, likeDict
 
@@ -132,11 +135,11 @@ def upload(request):
 
     return render(request, 'upload/upload.html', {'loginForm':loginForm,'form':form, 'loginStatus':request.session['loginStatus'],'username':request.session['username']})
 
+@csrf_protect
 def register_user(request):
     args = {}
     args['loginStatus'] = request.session['loginStatus']
     args['loginForm'] = loginForm()
-    args.update(csrf(request))
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         args['form'] = form
