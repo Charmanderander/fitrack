@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from django.db.models import Count
 from django.template.defaulttags import register
 import hashlib, datetime, random
+from django.utils import timezone
 
 @register.filter
 def get_item(dictionary, key):
@@ -187,7 +188,7 @@ def register_confirm(request, activation_key):
     user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
 
     #check if the activation key has expired, if it hase then render confirm_expired.html
-    if user_profile.key_expires < timezone.now():
+    if user_profile.key_expires < timezone.now:
         return render(request, 'registration/confirm_expired.html', args)
     #if the key hasn't expired save user and set him as active and render some template to confirm activation
     user = user_profile.user
