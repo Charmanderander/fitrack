@@ -14,7 +14,7 @@ class Data(models.Model):
     duration = models.CharField(max_length=100)
     distance = models.CharField(max_length=100)
     user = models.CharField(max_length=100,default="unknown user")
-    datetime = models.DateTimeField(default=datetime.datetime.now())
+    datetime = models.DateTimeField(default=timezone.now)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
