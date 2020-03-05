@@ -6,7 +6,6 @@ from .auth import *
 from .search import *
 from django.template import RequestContext
 from django.core.mail import send_mail
-from django.utils import timezone
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import auth
 from django.http import JsonResponse
@@ -187,7 +186,7 @@ def register_confirm(request, activation_key):
     # check if there is UserProfile which matches the activation key (if not then display 404)
     user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
 
-    #check if the activation key has expired, if it hase then render confirm_expired.html
+    #check if the activation key has expired, if it has then render confirm_expired.html
     if user_profile.key_expires < timezone.now:
         return render(request, 'registration/confirm_expired.html', args)
     #if the key hasn't expired save user and set him as active and render some template to confirm activation
