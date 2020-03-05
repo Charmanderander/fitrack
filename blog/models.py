@@ -12,12 +12,12 @@ class Data(models.Model):
     duration = models.CharField(max_length=100)
     distance = models.CharField(max_length=100)
     user = models.CharField(max_length=100,default="unknown user")
-    datetime = models.DateTimeField(default=timezone.now())
+    datetime = models.DateTimeField(default=timezone.now)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     activation_key = models.CharField(max_length=40, blank=True)
-    key_expires = models.DateTimeField(default=timezone.now())
+    key_expires = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.user.username

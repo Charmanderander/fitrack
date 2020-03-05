@@ -32,7 +32,7 @@ STATICFILES_DIRS = (
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = None
+TIME_ZONE = 'Asia/Singapore'
 
 USE_I18N = True
 
