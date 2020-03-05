@@ -6,7 +6,7 @@ import datetime
 
 from django.utils import timezone
 
-class dreamDB(models.Model):
+class Data(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=3000)
     location = models.CharField(max_length=100)
